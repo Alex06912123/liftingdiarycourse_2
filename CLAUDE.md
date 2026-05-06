@@ -21,6 +21,8 @@ This is a Next.js 15.5.3 application with TypeScript and Tailwind CSS v4, using 
 - /docs/data-fetching.md
 - /docs/auth.md
 - /docs/data-mutations.md
+- /docs/server-components.md
+- /docs/routing.md
 
 ## Architecture
 
