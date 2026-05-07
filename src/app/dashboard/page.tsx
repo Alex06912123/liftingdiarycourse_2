@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import { CalendarClient } from "./calendar-client";
 import { Button } from "@/components/ui/button";
 import { Suspense } from "react";
+import Link from "next/link";
 
 interface DashboardPageProps {
   searchParams: Promise<{ date?: string }>;
@@ -34,15 +35,20 @@ async function DashboardContent({ searchParams }: { searchParams: { date?: strin
   const workouts = await getUserWorkouts(selectedDate);
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-      <CalendarClient />
+    <div className="space-y-6">
+      <div className="flex items-center justify-between gap-4">
+        <div className="flex items-center gap-4">
+          <CalendarClient />
+          <h2 className="text-xl font-semibold">
+            Workouts for {formatDateWithOrdinal(selectedDate)}
+          </h2>
+        </div>
+        <Link href="/dashboard/workout/new">
+          <Button>Add New Workout</Button>
+        </Link>
+      </div>
 
       <div className="space-y-4">
-        <h2 className="text-xl font-semibold">
-          Workouts for {formatDateWithOrdinal(selectedDate)}
-        </h2>
-
-        <div className="space-y-4">
           {workouts.length > 0 ? (
             workouts.map((workout) => (
               <div
@@ -75,13 +81,9 @@ async function DashboardContent({ searchParams }: { searchParams: { date?: strin
           ) : (
             <div className="border rounded-lg p-8 text-center">
               <p className="text-muted-foreground">No workouts logged for this date</p>
-              <Button className="mt-4">
-                Log New Workout
-              </Button>
             </div>
           )}
         </div>
-      </div>
     </div>
   );
 }
